@@ -6,10 +6,10 @@
         margin: 10px;
         max-width: 300px;
     }
-    #emoji .emoji-popup {
+    #emoji #theList {
         visibility: hidden;
     }
-    #emoji.open .emoji-popup {
+    #emoji.open #theList {
         visibility: visible;
     }
     </style>
@@ -31,26 +31,26 @@
     </div>
 
     <p>The following buttons cause the problem to disappear / reappear:</p>
-    <button onclick="document.getElementById('emoji').className = 'open'">Show nodes (make faster)</button><br>
-    <button onclick="document.getElementById('emoji').className = ''">Hide nodes (make slower)</button><br>
+    <button onclick="document.getElementById('emoji').className = 'open'">Show node (make fast)</button><br>
+    <button onclick="document.getElementById('emoji').className = ''">Hide node (make slow)</button><br>
     <button onclick="
         var el = document.createElement('p');
         el.id = 'spacer';
-        el.innerHTML = 'Putting a p tag between the nodes also prevents the problem.';
+        el.innerHTML = 'Putting a p tag between the divs prevents the problem.';
         document.body.insertBefore(el, document.getElementById('emoji'));
-    ">Insert rendered node (make faster)</button><br>
-    <button onclick="document.getElementById('spacer').remove();">Remove rendered node (make slower)</button>
+    ">Insert rendered node (make fast)</button><br>
+    <button onclick="document.getElementById('spacer').remove();">Remove rendered node (make slow)</button>
 
     <p>Type here:
     <div contenteditable="true" id="input"></div>
     <div id="emoji">
-        <div class="emoji-popup">
-            <div id="theList"></div>
-        </div>
+        <div id="theList">Showing this hidden div prevents the problem.<br></div>
     </div>
-<script>
-    // this was originally a list of 2,000 emoji which was even slower
-    // this could be static content, but I'm generating in JS to reduce the size of the attachment.
+
+    <script>
+    // This was originally a list of 2,000 emoji, thus the name.
+    // This could be static content, but I'm generating in JS to reduce the size of the attachment.
+    // This test does not rely on JS, this is not a JS problem.
     var list = document.getElementById('theList'),
         el, i;
     for (i = 0; i < 3000; i++) {
@@ -58,6 +58,6 @@
         el.innerHTML = 'This is some dynamic content: ' + i + '<br>';
         list.appendChild(el);
     }
-</script>
+    </script>
 </body>
 </html>
